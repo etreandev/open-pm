@@ -10,8 +10,9 @@ description: >-
 
 # pm-weekly: zoom out once a week
 
-Read [pm-core](../pm-core/SKILL.md) and
-[prioritization.md](../pm-core/references/prioritization.md).
+Read [pm-core](../pm-core/SKILL.md),
+[prioritization.md](../pm-core/references/prioritization.md), and
+[style.md](../pm-core/references/style.md) (terse chat output).
 
 ## Steps
 

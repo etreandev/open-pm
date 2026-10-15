@@ -7,6 +7,7 @@ capacity_hours_per_week: 40
 focus_ratio: 0.6          # share of capacity that is real focus time (the rest is meetings, interruptions)
 sprint_length_days: 14
 weekly_review_day: Friday
+style: terse                 # terse (default, caveman-inspired) | normal
 ---
 
 # About me

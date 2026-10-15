@@ -7,6 +7,7 @@ capacity_hours_per_week: 40
 focus_ratio: 0.6
 sprint_length_days: 14
 weekly_review_day: Friday
+style: terse
 ---
 
 # About me

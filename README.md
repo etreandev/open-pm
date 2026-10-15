@@ -22,6 +22,7 @@ Laziness", applied here to requirements before they turn into code.
 | `pm-intake` | per request | Turns a raw client ask into a brief with open questions, a Ladder of Laziness verdict, and a **play-back message** you send to confirm you understood |
 | `pm-spec` | per initiative | Writes success metrics (outcome / output / guardrail), MUST/SHOULD/OUT scope, **options for you to choose from**, stories, and a pre-mortem |
 | `pm-breakdown` | per initiative | Splits the spec into atomic tasks, including *your* lead tasks, with the critical path and a capacity check, and adds milestones to the roadmap |
+| `pm-view` | on demand | Visual review in browser via Lavish: plan, milestones, task board, and dependencies with live comments and editing |
 | `pm-roadmap` | per client / portfolio | Builds the Now/Next/Later story and checks that tasks, milestones, and updates agree |
 | `pm-prioritize` | on demand | Ranks work across all clients (WSJF-lite), flags overload, and proposes what to drop, delegate, or renegotiate |
 | `pm-daily` | day | One-screen plan for the morning, plus an end-of-day `shutdown` |
@@ -42,6 +43,8 @@ flowchart LR
   B -->|"Gate 1: client confirms play-back"| C[pm-spec]
   C -->|"Gate 2: you pick approach + scope"| D[pm-breakdown]
   D --> E[("PM workspace<br/>tasks + roadmap")]
+  E --> V["pm-view<br/>(Lavish visual review)"]
+  V -->|"comments & edits"| E
   E --> F[pm-daily]
   E --> G[pm-weekly]
   E --> H[pm-sprint]

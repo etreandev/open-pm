@@ -140,8 +140,12 @@ def sort_key(t: dict):
             t["hours"] if t["hours"] is not None else 10**6, t["id"])
 
 
-def lint(tasks: list[dict]) -> list[str]:
-    problems, seen = [], {}
+MAX_TITLE_WORDS = 8
+MAX_DONE_WHEN_WORDS = 25
+
+
+def lint(tasks: list[dict]) -> tuple[list[str], list[str]]:
+    problems, warnings, seen = [], [], {}
     ids = {t["id"] for t in tasks}
     for t in tasks:
         where = f'{t["file"]}:{t["line"]} {t["id"]}'
@@ -150,6 +154,9 @@ def lint(tasks: list[dict]) -> list[str]:
         seen.setdefault(t["id"], where)
         if t["status"] not in STATUSES:
             problems.append(f"{where}: invalid status '{t['status']}'")
+        title_words = len(t["title"].split())
+        if title_words > MAX_TITLE_WORDS:
+            warnings.append(f"{where}: title has {title_words} words (> {MAX_TITLE_WORDS}, be terse)")
         if t["status"] in {"done", "dropped"}:
             continue
         if t.get("type") not in TYPES:
@@ -158,6 +165,10 @@ def lint(tasks: list[dict]) -> list[str]:
             problems.append(f"{where}: missing owner")
         if not t.get("done_when"):
             problems.append(f"{where}: missing done_when")
+        else:
+            dw_words = len(t["done_when"].split())
+            if dw_words > MAX_DONE_WHEN_WORDS:
+                warnings.append(f"{where}: done_when has {dw_words} words (> {MAX_DONE_WHEN_WORDS}, be terse)")
         if t["hours"] is None:
             problems.append(f"{where}: missing/unparseable estimate")
         elif t["hours"] > MAX_HOURS:
@@ -172,7 +183,7 @@ def lint(tasks: list[dict]) -> list[str]:
         for d in t["deps"]:
             if d not in ids:
                 problems.append(f"{where}: depends_on unknown id {d}")
-    return problems
+    return problems, warnings
 
 
 def fmt_due(t: dict) -> str:
@@ -245,9 +256,17 @@ def main(argv: list[str] | None = None) -> int:
     enrich(tasks, today)
 
     if a.lint:
-        problems = lint(tasks)
-        print("\n".join(problems) if problems else f"OK - {len(tasks)} tasks, no problems.")
-        return 1 if problems else 0
+        problems, warnings = lint(tasks)
+        for w in warnings:
+            print(f"WARN: {w}")
+        if problems:
+            print("\n".join(problems))
+            return 1
+        if warnings:
+            print(f"OK - {len(tasks)} tasks, no problems ({len(warnings)} warning(s)).")
+        else:
+            print(f"OK - {len(tasks)} tasks, no problems.")
+        return 0
 
     if a.owner:
         tasks = [t for t in tasks if t["owner"] == a.owner]

@@ -9,7 +9,8 @@ description: >-
 
 # pm-daily: today, on one screen
 
-Read [pm-core](../pm-core/SKILL.md). The ranking rules are the triage tiers in
+Read [pm-core](../pm-core/SKILL.md) and [style.md](../pm-core/references/style.md)
+(terse chat output). The ranking rules are the triage tiers in
 [prioritization.md](../pm-core/references/prioritization.md), and they are
 already built into the scanner.
 

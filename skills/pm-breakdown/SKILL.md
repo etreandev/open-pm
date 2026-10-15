@@ -12,7 +12,8 @@ description: >-
 
 Read [pm-core](../pm-core/SKILL.md), then
 [planning-standards.md](../pm-core/references/planning-standards.md)
-(atomic task rules) and the task format in
+(atomic task rules), [style.md](../pm-core/references/style.md)
+(terse style: title ≤ 8 words, `done_when` ≤ 25 words), and the task format in
 [workspace.md](../pm-core/references/workspace.md).
 
 ## Preconditions

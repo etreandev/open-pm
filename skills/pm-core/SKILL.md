@@ -21,6 +21,7 @@ Every pm-* skill follows these rules. Read the reference you need, not all of th
 | Should this work exist at all? | [ladder-of-laziness.md](references/ladder-of-laziness.md) |
 | What to do first | [prioritization.md](references/prioritization.md) |
 | Success metrics, stories, atomic tasks | [planning-standards.md](references/planning-standards.md) |
+| Terse style (caveman-inspired) | [style.md](references/style.md) |
 | Blank documents | [templates/](templates/) |
 
 ## Non-negotiables (summary)
@@ -36,7 +37,8 @@ Every pm-* skill follows these rules. Read the reference you need, not all of th
 4. **Gates are real.** Don't write a spec from an unvalidated brief. Don't break
    down an unapproved spec. If the user wants to skip a gate, say once what the
    risk is, then do it and note `gate_skipped: <reason>` in the document.
-5. **Short output.** Daily output fits on one screen. Weekly fits on two. Put
-   the detail in the files, not in the chat.
+5. **Terse output.** Internal artifacts and chat use terse style (see
+   [style.md](references/style.md)). Daily output fits on one screen; weekly fits
+   on two. Put detail in files, not chat. Client-facing text stays in polished prose.
 6. **Write in the user's language.** Workspace files stay in the language they
    were started in.

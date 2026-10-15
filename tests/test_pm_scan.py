@@ -86,6 +86,26 @@ class Lint(unittest.TestCase):
         self.assertEqual(pm_scan.parse_hours("1d"), 8)
         self.assertIsNone(pm_scan.parse_hours("soon"))
 
+    def test_brevity_warnings(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            d = Path(tmp, "clients", "x", "initiatives", "001-a")
+            d.mkdir(parents=True)
+            long_title = "This is a very long task title that exceeds eight words"
+            long_dw = " ".join(["word"] * 26)
+            (d / "tasks.md").write_text(
+                f"### X-001-01 {long_title}\n- status: todo\n- owner: me\n- type: build\n- estimate: 1h\n"
+                f"- story: S1\n- milestone: M1\n- done_when: {long_dw}\n"
+            )
+            buf = io.StringIO()
+            with redirect_stdout(buf):
+                code = pm_scan.main(["--workspace", tmp, "--lint"])
+            out = buf.getvalue()
+        self.assertEqual(code, 0)
+        self.assertIn("WARN:", out)
+        self.assertIn("words (> 8, be terse)", out)
+        self.assertIn("words (> 25, be terse)", out)
+        self.assertIn("OK - 1 tasks, no problems (2 warning(s)).", out)
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -26,7 +26,7 @@ Read [pm-core](../pm-core/SKILL.md) first.
    Write the answers to `me.md` using [me.md](../pm-core/templates/me.md).
 5. Save the path so every skill and the scanner can find it:
    `mkdir -p ~/.config/openpm && echo "<path>" > ~/.config/openpm/workspace`.
-6. Run `git init`. Add a `.gitignore` that excludes `.DS_Store`. Make the
+6. Run `git init`. Add a `.gitignore` that excludes `.DS_Store` and `.lavish/`. Make the
    first commit.
 7. Offer (don't do it automatically) to push it as a **private** GitHub repo:
    `gh repo create <name> --private --source . --push`. Remind the user that

@@ -3,3 +3,5 @@ __pycache__/
 *.pyc
 # Personal chat export; kept locally, not published (repo is public)
 docs/archive/*.pdf
+.lavish/
+

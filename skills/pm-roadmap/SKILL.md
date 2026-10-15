@@ -10,7 +10,8 @@ description: >-
 # pm-roadmap: one consistent story per client
 
 Read [pm-core](../pm-core/SKILL.md), then the "Narrative consistency" section
-of [planning-standards.md](../pm-core/references/planning-standards.md).
+of [planning-standards.md](../pm-core/references/planning-standards.md) and
+[style.md](../pm-core/references/style.md) (one-line capability statements).
 
 ## Steps
 
