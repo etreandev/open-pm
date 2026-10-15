@@ -1,36 +1,24 @@
 ---
 name: pm-prioritize
 description: >-
-  Re-ranks all open work across every client using WSJF-lite and a capacity
-  check, exposes overload, and proposes what to drop, delegate, or renegotiate.
-  Writes priorities.md. Use when the user runs pm-prioritize, feels overloaded,
-  gets a new urgent request, or asks "what should I focus on".
+  Re-rank open work across all clients via WSJF-lite and capacity checks.
+  Expose overload; propose drop/delegate/renegotiate options. Writes priorities.md.
+  Trigger on pm-prioritize, overload, or focus question.
 ---
 
-# pm-prioritize: what matters most, across all clients
+# pm-prioritize: stack-rank work across clients
 
-Read [pm-core](../pm-core/SKILL.md), then
-[prioritization.md](../pm-core/references/prioritization.md).
+Read [pm-core](../pm-core/SKILL.md) and [prioritization.md](../pm-core/references/prioritization.md).
 
 ## Steps
 
-1. **Collect the state:**
-   `python3 ../pm-core/scripts/pm_scan.py --json`, plus every client's
-   `client.md` (health, contract) and `roadmap.md` (Now and Next milestones),
-   plus any briefs still in `draft` or `validated` that have no tasks yet.
-2. **Ask at most 2 questions**, and only if the answer would change the
-   ranking. For example: "Is the Acme renewal this month?" or "Any new
-   requests not yet captured?" Capture new requests with `pm-intake` later; a
-   one-liner in the inbox is enough for now.
-3. **Score initiatives and milestones** (not individual tasks) with
-   WSJF-lite. Show the factor table, so the user can argue with a single
-   factor.
-4. **Capacity check** for the next 2 weeks: compare committed and planned
-   hours with available focus hours. If it's over, lead with that and give
-   concrete options: drop, defer, delegate (to whom), or renegotiate (which
-   date, with whom).
-5. **Fairness check** across clients (the 60% rule).
-6. **Write `priorities.md`** at the workspace root, overwriting the old one:
+1. **Gather state:**
+   `python3 ../pm-core/scripts/pm_scan.py --json`, client files `client.md` (health, contract) and `roadmap.md` (Now/Next milestones), plus briefs in `draft` or `validated` lacking tasks.
+2. **Clarify (max 2 questions):** ask only if answers shift ranking (e.g., contract renewals, unlogged requests). Log incoming asks in client inbox for later `pm-intake`.
+3. **Score via WSJF-lite:** score initiatives and milestones (never single tasks). Display factor matrix for user review.
+4. **Capacity audit (2-week horizon):** compare committed/planned hours against focus capacity. If overloaded: lead with deficit, provide explicit levers (drop, defer, delegate with assignee, renegotiate target date and stakeholder).
+5. **Fairness audit:** verify cross-client balance (max 60% capacity to single client).
+6. **Write `priorities.md`** at workspace root:
 
    ```markdown
    ---
@@ -48,13 +36,8 @@ Read [pm-core](../pm-core/SKILL.md), then
    - <item> · <why> · <revisit date>
    ```
 
-7. In chat, show: the overload status, the ranked top 5 with a one-line reason
-   each, and the decisions you need from the user. Once the user decides,
-   update the task `status` and `due` values and record any decision that
-   affects a client in that client's `decisions.md`.
+7. **Chat output:** overload status, ranked top 5 with single-line rationale, pending decisions. After decision: update task `status`/`due`, log client impacts in `decisions.md`.
 
 ## Rules
-- Don't silently change `committed` dates. Committed dates move only after the
-  user has talked to the client.
-- If renegotiation is the right answer, say so directly and offer
-  `pm-tough-conversation`.
+- Never move `committed: true` dates silently. Changes require client consultation.
+- When renegotiation required, state directly; suggest `pm-tough-conversation`.

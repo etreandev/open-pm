@@ -1,49 +1,24 @@
 ---
 name: pm-weekly
 description: >-
-  Runs the weekly review across all clients: planned vs done, commitments kept
-  or slipped, client health, wins, lessons, next week's outcomes against
-  capacity, people to follow up with, and drafts of client updates. Use when
-  the user runs pm-weekly, says "weekly review", or it's their weekly review
-  day.
+  Run cross-client weekly review: planned vs done, slips, client health, wins,
+  lessons, next week outcomes, relationship follow-ups, and update drafts.
+  Trigger on pm-weekly or weekly review day.
 ---
 
-# pm-weekly: zoom out once a week
+# pm-weekly: cross-client weekly review
 
-Read [pm-core](../pm-core/SKILL.md),
-[prioritization.md](../pm-core/references/prioritization.md), and
-[style.md](../pm-core/references/style.md) (terse chat output).
+Read [pm-core](../pm-core/SKILL.md), [prioritization.md](../pm-core/references/prioritization.md), and [style.md](../pm-core/references/style.md) (terse chat output).
 
 ## Steps
 
-1. **Collect the week's data:** this week's `journal/daily/*`, the
-   `pm_scan.py --json --all` output (to compare with last week's weekly file),
-   `git -C <workspace> log --since="7 days ago" --oneline` if it's a git repo,
-   each client's `client.md` and `roadmap.md`, and `priorities.md`.
-2. **Scoreboard:** planned vs done, committed dates kept vs slipped. For each
-   slip, ask "was the client told?" If they weren't, that becomes the top
-   action.
-3. **Client health:** propose green, yellow, or red for each client, with a
-   one-line reason. Base it on the evidence: slips, blockers, how the latest
-   conversations went, and how long since the last update. Ask the user to
-   confirm or override, then write it to `client.md` (`health` and the health
-   log).
-4. **Wins and lessons:** write wins in business language (they go into
-   updates). For misses, give the root cause and one change for next week.
-   Look for patterns, for example: "estimates for data-access tasks were off
-   3× for two weeks in a row".
-5. **Next week:** compare capacity with planned hours, and set at most 2
-   outcomes per client, each tied to a milestone. If it's over capacity, run
-   the overload options from prioritization.md.
-6. **People:** list who to follow up with and why: stakeholders who haven't
-   been contacted in more than 2 weeks, champions worth thanking, skeptics who
-   need a conversation, and networking the user wanted to do (check `me.md`
-   goals).
-7. **Updates:** for each client where an update is due (per the cadence in
-   `client.md`), draft one with `pm-update` and save it to `updates/`.
-8. Write `journal/weekly/<YYYY-Www>.md` using
-   [weekly.md](../pm-core/templates/weekly.md). In chat, show: the scoreboard,
-   the health table, next week's outcomes, decisions needed, and links to the
-   drafted updates. Two screens max.
-9. Suggest `pm-roadmap all` if any milestone changed status, and
-   `pm-tough-conversation` if any client is red.
+1. **Ingest weekly inputs:** current `journal/daily/*`, `pm_scan.py --json --all` output, `git -C <workspace> log --since="7 days ago" --oneline`, client `client.md`/`roadmap.md` files, `priorities.md`.
+2. **Scoreboard:** planned vs delivered; committed deadlines preserved vs missed. If slipped date wasn't communicated to client: prioritize immediate outreach.
+3. **Assess client health:** suggest green/yellow/red per client with single-line reason based on slips, blockers, sentiment, update cadence. Obtain user confirmation; record in `client.md` health log.
+4. **Wins and retros:** translate wins to business value (for client updates). For failures: identify root causes and specific process adjustment. Flag repeat estimation errors.
+5. **Target next week:** check capacity vs demand. Max 2 milestone-linked outcomes per client. If capacity exceeded: apply overload levers from `prioritization.md`.
+6. **Stakeholder follow-ups:** identify stale contacts (> 2 weeks), champions to acknowledge, skeptics needing alignment, or networking goals from `me.md`.
+7. **Draft updates:** run `pm-update` for clients due on cadence; save to `updates/`.
+8. **Artifact:** save `journal/weekly/<YYYY-Www>.md` via [weekly.md](../pm-core/templates/weekly.md).
+9. **Chat output (max 2 screens):** scoreboard, health table, next week outcomes, required decisions, drafted update links.
+10. Trigger suggestions: `pm-roadmap all` if milestones shifted; `pm-tough-conversation` if client marked red.

@@ -1,35 +1,34 @@
 ---
 name: pm-view
 description: >-
-  Opens a visual review of a project, client roadmap, or all clients in the
-  browser via Lavish Editor. Renders plan, milestones, task board, and
-  dependency graph. Lets you comment and edit directly, translates feedback
-  into markdown edits in place, and re-renders.
+  Open visual review of project, client roadmap, or all clients in browser
+  via Lavish Editor. Renders plan, milestones, task board, dependency graph.
+  Translate feedback to markdown edits in place and re-render.
 ---
 
 # pm-view: visual review and editing
 
 Read [pm-core](../pm-core/SKILL.md) and [style.md](../pm-core/references/style.md) first.
 
-## When to run
-- The user runs `pm-view`, says "show the plan visually", "open the task board", or "let me review this in the browser".
-- After running `pm-breakdown` or `pm-roadmap` when the user wants visual feedback before executing.
+## Trigger
+- User runs `pm-view`, requests visual plan, task board, or browser review.
+- After `pm-breakdown` or `pm-roadmap` for visual confirmation.
 
 ## Workflow
 
-1. **Pick the target:**
-   - Single project: `clients/<slug>/initiatives/<NNN>-<slug>` (default if working in an initiative).
-   - Single client: `clients/<slug>` (groups all projects and shows narrative roadmap).
+1. **Scope target:**
+   - Single project: `clients/<slug>/initiatives/<NNN>-<slug>` (default if in initiative).
+   - Single client: `clients/<slug>` (all projects + narrative roadmap).
    - Portfolio: all clients (`index.html`).
-2. **Render pages:**
+2. **Render HTML:**
    `python3 <pm-core>/scripts/pm_render.py --workspace <ws> --out <ws>/.lavish`
-3. **Open in Lavish:**
+3. **Launch in Lavish:**
    `lavish-axi <target-page.html>`
-4. **Review loop:**
-   Run `lavish-axi poll <target-page.html>` in the foreground to receive annotations, quick edits, or diagram changes.
-   Translate feedback to markdown edits in place (see [review-loop.md](references/review-loop.md)).
+4. **Review cycle:**
+   Run `lavish-axi poll <target-page.html>` in foreground for annotations, quick edits, diagram adjustments.
+   Map feedback directly to markdown edits in place (see [review-loop.md](references/review-loop.md)).
 5. **Lint and re-render:**
-   Run `python3 <pm-core>/scripts/pm_scan.py --lint` and re-render. Repeat until the user ends the review session.
+   Run `python3 <pm-core>/scripts/pm_scan.py --lint` and re-render. Loop until user terminates session.
 
 ## Detail
-Read [review-loop.md](references/review-loop.md) for feedback mapping, gate preservation, and receipt contracts.
+Read [review-loop.md](references/review-loop.md) for feedback mapping, gate invariants, and receipt schemas.

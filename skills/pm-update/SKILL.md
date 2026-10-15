@@ -1,46 +1,29 @@
 ---
 name: pm-update
 description: >-
-  Drafts a client or stakeholder status update that translates technical
-  progress into business outcomes, with explicit asks and risks, adapted to
-  the audience (sponsor, working team, exec) and channel (email, Slack,
-  talking points). Use when the user runs pm-update or asks to write a status
-  update, a demo summary, or release notes for a client.
+  Draft client status updates converting technical milestones to business outcomes,
+  with explicit asks and risks. Adapt to audience and channel. Trigger on pm-update,
+  demo summary, or release notes.
 ---
 
-# pm-update: say what changed for them, not what we did
+# pm-update: communicate client impact over internal activity
 
 Read [pm-core](../pm-core/SKILL.md).
 
 ## Steps
 
-1. Identify the client, audience, channel, and period. Use the defaults from
-   `client.md` (cadence, stakeholder preferences) and `me.md` (tone,
-   language). Ask only if one is ambiguous.
-2. Collect: tasks done in the period (`pm_scan.py --client <slug> --json
-   --all`), roadmap milestone status, `decisions.md` entries in the period,
-   open lead tasks that need something from the client, and the previous
-   update (for continuity).
-3. **Translate.** Every item answers "what can they do now, or what risk is
-   gone?" For example, "Optimized the incremental model" becomes "The daily
-   revenue report is now ready by 7am instead of 11am."
-4. **Consistency check:** this update must not contradict the roadmap or the
-   previous update. If the status changed (for example, a milestone is now at
-   risk), say so near the top. Don't bury it.
-5. **Asks:** each one is specific, has a date, and says what it unblocks.
-6. **Adapt to the audience:**
-   - Exec: 5 lines max. Status, headline, decision needed.
-   - Sponsor: use the full template.
-   - Working team: more detail is fine. You can mention task IDs.
-7. Save to `clients/<slug>/updates/<YYYY-MM-DD>-<audience>.md` from
-   [update.md](../pm-core/templates/update.md) with `status: draft`, and show
-   the draft in chat. **The user sends it.** When they confirm it's sent, set
-   `status: sent`.
+1. **Parameters:** client, audience, channel, time horizon. Defaults from `client.md` and `me.md`. Ask only if ambiguous.
+2. **Collect data:** completed tasks (`pm_scan.py --client <slug> --json --all`), roadmap milestone states, `decisions.md` additions, open lead tasks needing client action, prior update.
+3. **Translate to business value:** convert technical work to client capabilities/risk reductions (e.g., "model refactored" → "daily revenue numbers ready 4 hours earlier").
+4. **Verify narrative alignment:** update must match roadmap and previous status. Highlight status degradations near top; never bury.
+5. **Asks:** concrete request, explicit deadline, affected dependency.
+6. **Audience tailoring:**
+   - Exec: ≤ 5 lines (status, core takeaway, pending decision).
+   - Sponsor: full template schema.
+   - Engineering/working team: task IDs and technical specifics permitted.
+7. **Artifact:** save `clients/<slug>/updates/<YYYY-MM-DD>-<audience>.md` from [update.md](../pm-core/templates/update.md) (`status: draft`). Display in chat. **User delivers message.** On send confirmation: set `status: sent`.
 
 ## Rules
-- No jargon in client-facing text unless the audience is technical.
-- Bad news goes first and comes with a plan: what happened, impact, what we're
-  doing, and what we need. If it's serious, suggest `pm-tough-conversation`
-  before sending.
-- Don't round up progress. "80% done" is not allowed. Say which milestones
-  are done and which aren't.
+- Ban technical jargon in client prose unless audience technical.
+- Deliver negative developments first, coupled with mitigation path (root cause, blast radius, remedy, pending ask). Severe issues: recommend `pm-tough-conversation`.
+- Never round progress percentage ("80% complete" banned). Report discrete milestone completion.

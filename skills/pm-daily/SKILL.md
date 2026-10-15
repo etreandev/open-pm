@@ -1,55 +1,34 @@
 ---
 name: pm-daily
 description: >-
-  Builds the user's one-screen plan for today (top 3, lead work only they can
-  do, what to delegate, risks) from all clients, or runs the end-of-day
-  shutdown to record progress and carry-overs. Use when the user runs
-  pm-daily, says "plan my day", "what's next", or "wrap up the day".
+  Generate single-screen daily plan (top 3, user lead tasks, delegation, risks)
+  or execute end-of-day shutdown. Trigger on pm-daily, "plan my day",
+  "what's next", or "wrap up the day".
 ---
 
-# pm-daily: today, on one screen
+# pm-daily: today on one screen
 
-Read [pm-core](../pm-core/SKILL.md) and [style.md](../pm-core/references/style.md)
-(terse chat output). The ranking rules are the triage tiers in
-[prioritization.md](../pm-core/references/prioritization.md), and they are
-already built into the scanner.
+Read [pm-core](../pm-core/SKILL.md) and [style.md](../pm-core/references/style.md) (terse chat output). Ranking uses triage tiers in [prioritization.md](../pm-core/references/prioritization.md) (embedded in scanner).
 
 ## Morning mode (default)
 
-1. Run `python3 ../pm-core/scripts/pm_scan.py` (ranked, all clients). Also
-   read `priorities.md` if it is less than 7 days old, yesterday's
-   `journal/daily/` file (its carry-overs), and `me.md`.
-2. Ask **one** question: "What meetings or fixed blocks do you have today,
-   and is anything new or on fire?" Skip it if the user already told you.
-3. Calculate the available focus hours: working hours minus meetings, times
-   `focus_ratio`.
-4. Build the plan using [daily.md](../pm-core/templates/daily.md):
-   - **Top 3:** take them from the highest tiers that fit in the available
-     hours. Make one of them a lead task when one exists. For each, give the
-     tier reason in a few words.
-   - **Lead work:** messages to send, decisions to make, resources to chase,
-     and the people waiting on the user. Point out which tasks each one
-     unblocks.
-   - **Delegate:** actionable `owner: agent` tasks, and the context each one
-     needs.
-   - **Watch list:** committed dates due within 2 days, blocked items older
-     than 3 days, and meetings that need prep. Offer `pm-tough-conversation`
-     for any meeting that is hard.
-5. Write `journal/daily/<YYYY-MM-DD>.md`, then show it in chat. It must fit on
-   one screen. If it doesn't, cut it.
+1. **Scan state:** run `python3 ../pm-core/scripts/pm_scan.py`. Inspect `priorities.md` (if < 7 days old), previous `journal/daily/` carry-overs, `me.md`.
+2. **Clarify (single question):** "What meetings/blocks today; anything on fire?" Skip if provided.
+3. **Compute focus hours:** (working hours - meeting hours) × `focus_ratio`.
+4. **Draft plan** via [daily.md](../pm-core/templates/daily.md):
+   - **Top 3:** highest tiers fitting available hours. Include lead task if available. Add brief tier reason.
+   - **Lead work:** user-only tasks (comms, decisions, unblocking others). Link unblocked tasks.
+   - **Delegate:** actionable `owner: agent` tasks with required context.
+   - **Watch list:** committed deadlines ≤ 2 days, blockers > 3 days, high-friction meetings (offer `pm-tough-conversation`).
+5. **Persist and emit:** save `journal/daily/<YYYY-MM-DD>.md`. Output to chat. Must fit on single screen. Prune if exceeds.
 
-## Shutdown mode ("wrap up", "end of day", "shutdown")
+## Shutdown mode (trigger: "wrap up", "end of day", "shutdown")
 
-1. Ask: "What got done? Anything new I should capture?" Accept any form.
-   IDs, plain sentences, or a brain-dump all work.
-2. Update the task `status` lines in place, set `blocked_by` where it applies,
-   and save new information to the right client's `inbox/`.
-3. Fill in the Shutdown section of today's journal: done, carry over (with the
-   reason), and tomorrow's first move.
-4. If a committed date is now at risk, say so plainly and suggest the user
-   warn the client **today**. Offer to draft the message.
+1. Prompt: "What got done? Any new inputs?" Accept raw IDs, sentences, brain-dumps.
+2. Update task `status` in place. Populate `blocked_by`. Route new inputs to client `inbox/`.
+3. Complete journal Shutdown section: completed, carry-overs with rationale, tomorrow's first move.
+4. If committed date endangered: state immediately; advise warning client today. Offer draft.
 
 ## Rules
-- Plan for 3 items, not 10. If the user insists on more, list them under
-  "If time allows".
-- Don't schedule more work than the available focus hours.
+- Cap primary plan at 3 items. Spillover goes under "If time allows".
+- Never exceed available focus hours.

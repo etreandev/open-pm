@@ -1,44 +1,33 @@
 ---
 name: pm-core
 description: >-
-  Shared operating model for the OpenPM suite (workspace layout, task format,
-  responsibility split, prioritization rules, Ladder of Laziness). Load this
-  whenever any other pm-* skill runs, or when the user asks how OpenPM works.
+  Shared operating model for OpenPM suite (workspace layout, task format,
+  responsibility split, prioritization, Ladder of Laziness). Load when
+  any pm-* skill runs, or user asks how OpenPM works.
 ---
 
 # OpenPM Core
 
-OpenPM turns client requirements into a **dynamic roadmap of atomic tasks that
-tells a consistent story**, then helps the user decide what to do today, this
-week, and this sprint.
+Turn client requirements into **dynamic roadmap of atomic tasks with consistent story**. Help user pick work for today, week, sprint.
 
-Every pm-* skill follows these rules. Read the reference you need, not all of them.
+Rules apply to all pm-* skills. Read required reference only:
 
 | Need | Read |
 | :--- | :--- |
 | Who does what, gates, tone | [operating-model.md](references/operating-model.md) |
-| Where files live, task format, finding the workspace | [workspace.md](references/workspace.md) |
-| Should this work exist at all? | [ladder-of-laziness.md](references/ladder-of-laziness.md) |
-| What to do first | [prioritization.md](references/prioritization.md) |
+| Where files live, task format, find workspace | [workspace.md](references/workspace.md) |
+| Should work exist? | [ladder-of-laziness.md](references/ladder-of-laziness.md) |
+| Priority order | [prioritization.md](references/prioritization.md) |
 | Success metrics, stories, atomic tasks | [planning-standards.md](references/planning-standards.md) |
-| Terse style (caveman-inspired) | [style.md](references/style.md) |
-| Blank documents | [templates/](templates/) |
+| Terse style (caveman) | [style.md](references/style.md) |
+| Blank docs | [templates/](templates/) |
 
-## Non-negotiables (summary)
+## Non-negotiables
 
-1. **Find the workspace first** (see [workspace.md](references/workspace.md)).
-   If there is none, offer to run `pm-init`.
-2. **The user owns the client and the decisions; the agent owns the drafts.**
-   The agent never decides the solution. It lays out options with trade-offs,
-   recommends one, and records the user's decision in `decisions.md`.
-3. **Read before you write.** Before you write anything, run the scanner to see
-   the current state:
-   `python3 <path-to-pm-core>/scripts/pm_scan.py` (add `--help` to see flags).
-4. **Gates are real.** Don't write a spec from an unvalidated brief. Don't break
-   down an unapproved spec. If the user wants to skip a gate, say once what the
-   risk is, then do it and note `gate_skipped: <reason>` in the document.
-5. **Terse output.** Internal artifacts and chat use terse style (see
-   [style.md](references/style.md)). Daily output fits on one screen; weekly fits
-   on two. Put detail in files, not chat. Client-facing text stays in polished prose.
-6. **Write in the user's language.** Workspace files stay in the language they
-   were started in.
+1. **Find workspace first** (see [workspace.md](references/workspace.md)). None found: offer `pm-init`.
+2. **User owns client and decisions; agent owns drafts.** Agent never picks solution. Present options with trade-offs, recommend one, record user choice in `decisions.md`.
+3. **Read before write.** Run scanner before writing:
+   `python3 <path-to-pm-core>/scripts/pm_scan.py` (`--help` for flags).
+4. **Gates real.** No spec from unvalidated brief. No breakdown from unapproved spec. If user skips gate: state risk once, proceed, record `gate_skipped: <reason>`.
+5. **Terse output.** Internal artifacts and chat use terse style (see [style.md](references/style.md)). Daily: one screen max. Weekly: two screens max. Put details in files, not chat. Client-facing text: polished prose.
+6. **User language.** Workspace files stay in original language.
